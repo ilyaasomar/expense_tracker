@@ -5,6 +5,7 @@ import {
   action,
   updateAction,
   deleteAction,
+  getByType,
 } from "../controller/general.js";
 import auth from "../middleware/auth.js";
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 router.get("/", auth, actions);
 router.post("/", auth, createAction);
 router.post("/single_action/:id", auth, action);
+router.post("/getbytype/:name", auth, getByType);
 router.put("/:id", auth, updateAction);
 router.delete("/:id", auth, deleteAction);
 export default router;

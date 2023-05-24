@@ -36,6 +36,19 @@ export const action = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+// get actions by type
+export const getByType = async (req, res) => {
+  const { name } = req.params;
+  try {
+    const action = await General.find().where({ general_type: name });
+    if (!action) {
+      return res.status(404).json({ message: "No Action Found" });
+    }
+    res.status(200).json(action);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
 // update
 export const updateAction = async (req, res) => {
   const { id } = req.params;
