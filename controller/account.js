@@ -3,7 +3,7 @@ import Account from "../models/Accounts.js";
 // get all accounts
 export const accounts = async (req, res) => {
   try {
-    const accounts = await Account.find();
+    const accounts = await Account.find().where({ user_id: req.userId });
     res.status(200).send(accounts);
   } catch (error) {
     res.status(400).json({ message: error.message });
