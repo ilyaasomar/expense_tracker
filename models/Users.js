@@ -5,6 +5,7 @@ const userSchema = mongoose.Schema({
   phone: { type: String },
   email: { type: String },
   password: { type: String },
+  title: { type: String, default: "Staff" },
   profilePic: { type: String, default: url },
   isAdmin: { type: Boolean, default: false },
 });

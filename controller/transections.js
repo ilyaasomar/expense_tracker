@@ -253,16 +253,6 @@ export const checkStatement = async (req, res) => {
     } else {
       return res.status(404).json({ message: "No Statement Found!" });
     }
-    // .gte(from_date)
-    // .lt(to_date);
-    // transaction_type: transaction_type,
-    // registred_date: { $gte: Date(start_date), $lt: Date(end_date) },
-    //
-    // if (!transection) {
-    //   return res.status(404).json({ message: "No transection found" });
-    // } else {
-    // return res.status(200).json(transection);
-    // }
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -14,9 +14,13 @@ export const createAccount = async (req, res) => {
   const { account_no, account_name, bank_name, amount, description } = req.body;
   try {
     // check if action is already exists
-    const oldAccount = await Account.findOne({ account_no });
+    const oldAccount = await Account.find();
     if (oldAccount) {
-      return res.status(404).json({ message: "Account Already Exists" });
+      return res
+        .status(404)
+        .json({
+          message: "Have already an account please use only one account",
+        });
     }
     const accountData = await Account.create({
       account_no,

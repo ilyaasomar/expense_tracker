@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 const secret = "test";
 export const signup = async (req, res) => {
-  const { name, phone, email, password } = req.body;
+  const { name, phone, email, password, title } = req.body;
 
   try {
     const checkUser = await UserModel.findOne({ email });
@@ -16,7 +16,7 @@ export const signup = async (req, res) => {
         phone,
         email,
         password: hashPassword,
-        name,
+        title,
       });
       const token = jwt.sign(
         {
@@ -24,7 +24,7 @@ export const signup = async (req, res) => {
           id: usersData._id,
         },
         secret,
-        { expiresIn: "3h" }
+        { expiresIn: "1h" }
       );
 
       // res.status(202).json({ usersData, token });
@@ -64,13 +64,14 @@ export const login = async (req, res) => {
 
 export const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { name, phone, email, password } = req.body;
+  const { name, phone, email, password, title } = req.body;
   try {
     const data = {
       name,
       phone,
       email,
       password,
+      title,
     };
     const updatedData = await UserModel.findByIdAndUpdate(
       id,
