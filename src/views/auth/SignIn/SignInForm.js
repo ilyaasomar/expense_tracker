@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
     Input,
     Button,
@@ -31,95 +31,116 @@ const SignInForm = (props) => {
 
     const { signIn } = useAuth()
 
-    const onSignIn = async (values, setSubmitting) => {
-        const { userName, password } = values
-        setSubmitting(true)
+    const [userData, setUserData] = useState({ email: '', password: '' })
 
-        const result = await signIn({ userName, password })
+    const onSignIn = async (e) => {
+        // const { userName, password } = values
+        // const { email, password } = userData
+        e.preventDefault()
+        const email = userData?.email
+        const password = userData?.password
 
-        if (result.status === 'failed') {
-            setMessage(result.message)
-        }
+        // setSubmitting(true)
 
-        setSubmitting(false)
+        // const result = await signIn({ email, password })
+        console.log(email)
+
+        // if (result.status === 'failed') {
+        //     setMessage(result.message)
+        // }
+
+        // setSubmitting(false)
     }
 
     return (
         <div className={className}>
-            {message && (
+            {/* {message && (
                 <Alert className="mb-4" type="danger" showIcon>
                     {message}
                 </Alert>
-            )}
+            )} */}
             <Formik
-                initialValues={{
-                    userName: 'admin',
-                    password: '123Qwe',
-                    rememberMe: true,
-                }}
-                validationSchema={validationSchema}
-                onSubmit={(values, { setSubmitting }) => {
-                    if (!disableSubmit) {
-                        onSignIn(values, setSubmitting)
-                    } else {
-                        setSubmitting(false)
-                    }
-                }}
+
+            // initialValues={{
+            //     userName: 'admin',
+            //     password: '123Qwe',
+            //     rememberMe: true,
+            // }}
+            // validationSchema={validationSchema}
+            // onSubmit={(values, { setSubmitting }) => {
+            //     if (!disableSubmit) {
+            //         onSignIn(values, setSubmitting)
+            //     } else {
+            //         setSubmitting(false)
+            //     }
+            // }}
             >
-                {({ touched, errors, isSubmitting }) => (
-                    <Form>
-                        <FormContainer>
-                            <FormItem
-                                label="User Name"
-                                invalid={errors.userName && touched.userName}
-                                errorMessage={errors.userName}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="userName"
-                                    placeholder="User Name"
-                                    component={Input}
-                                />
-                            </FormItem>
-                            <FormItem
-                                label="Password"
-                                invalid={errors.password && touched.password}
-                                errorMessage={errors.password}
-                            >
-                                <Field
-                                    autoComplete="off"
-                                    name="password"
-                                    placeholder="Password"
-                                    component={PasswordInput}
-                                />
-                            </FormItem>
-                            <div className="flex justify-between mb-6">
-                                <Field
-                                    className="mb-0"
-                                    name="rememberMe"
-                                    component={Checkbox}
-                                    children="Remember Me"
-                                />
-                                <ActionLink to={forgotPasswordUrl}>
-                                    Forgot Password?
-                                </ActionLink>
-                            </div>
-                            <Button
-                                block
-                                loading={isSubmitting}
-                                variant="solid"
-                                type="submit"
-                            >
-                                {isSubmitting ? 'Signing in...' : 'Sign In'}
-                            </Button>
-                            <div className="mt-4 text-center">
-                                <span>Don't have an account yet? </span>
-                                <ActionLink to={signUpUrl}>Sign up</ActionLink>
-                            </div>
-                        </FormContainer>
-                    </Form>
-                )}
+                {/* {({ touched, errors, isSubmitting }) => ( */}
+                <Form onSubmit={onSignIn}>
+                    <FormContainer>
+                        <FormItem
+                            label="User Name"
+                            // invalid={errors.userName && touched.userName}
+                            // errorMessage={errors.userName}
+                        >
+                            <Field
+                                type="text"
+                                autoComplete="off"
+                                name="email"
+                                placeholder="User Name"
+                                onChange={(e) =>
+                                    setUserData({
+                                        ...userData,
+                                        email: e.target.value,
+                                    })
+                                }
+                                component={Input}
+                            />
+                        </FormItem>
+                        <FormItem
+                            label="Password"
+                            // invalid={errors.password && touched.password}
+                            // errorMessage={errors.password}
+                        >
+                            <Field
+                                autoComplete="off"
+                                name="password"
+                                placeholder="Password"
+                                onChange={(e) =>
+                                    setUserData({
+                                        ...userData,
+                                        password: e.target.value,
+                                    })
+                                }
+                                component={PasswordInput}
+                            />
+                        </FormItem>
+                        <div className="flex justify-between mb-6">
+                            <Field
+                                className="mb-0"
+                                name="rememberMe"
+                                component={Checkbox}
+                                children="Remember Me"
+                            />
+                            <ActionLink to={forgotPasswordUrl}>
+                                Forgot Password?
+                            </ActionLink>
+                        </div>
+                        <Button
+                            block
+                            // loading={isSubmitting}
+                            variant="solid"
+                            type="submit"
+                        >
+                            Sign In
+                        </Button>
+                        <div className="mt-4 text-center">
+                            <span>Don't have an account yet? </span>
+                            <ActionLink to={signUpUrl}>Sign up</ActionLink>
+                        </div>
+                    </FormContainer>
+                </Form>
+                {/* )} */}
             </Formik>
         </div>
     )

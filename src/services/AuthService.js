@@ -1,13 +1,13 @@
 import ApiService from './ApiService'
 
-export async function apiSignIn(data) {
-    return ApiService.fetchData({
-        url: '/sign-in',
-        method: 'post',
-        data,
-    })
-}
-
+// export async function apiSignIn(data) {
+//     return ApiService.fetchData({
+//         url: '/users/signin',
+//         method: 'post',
+//         data,
+//     })
+// }
+export const apiSignIn = (data) => ApiService.post('/users/signin', data)
 export async function apiSignUp(data) {
     return ApiService.fetchData({
         url: '/sign-up',
